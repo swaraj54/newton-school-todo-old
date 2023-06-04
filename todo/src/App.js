@@ -1,47 +1,54 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
+import { connect } from 'react-redux';
+import { incrementAsync } from './actions';
 
-function App() {
+function App({ count, increment }) {
 
-  const [todos, setTodos] = useState([]);
-  const [singleTodo, setSingleTodo] = useState("");
+  // const [todos, setTodos] = useState([]);
+  // const [singleTodo, setSingleTodo] = useState("");
 
-  console.log(singleTodo, "singleTodo here")
+  // console.log(singleTodo, "singleTodo here")
 
-  function handleChange(e) {
-    setSingleTodo(e.target.value);
-  }
+  // function handleChange(e) {
+  //   setSingleTodo(e.target.value);
+  // }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (singleTodo) {
-      setTodos([...todos, singleTodo])
-      setSingleTodo("");
-    } else {
-      alert("Type todo!!")
-    }
-  }
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   if (singleTodo) {
+  //     setTodos([...todos, singleTodo])
+  //     setSingleTodo("");
+  //   } else {
+  //     alert("Type todo!!")
+  //   }
+  // }
 
-  function deleteTodo(todo) {
-    // console.log(todo, "- todo here")
-    // for (var i = 0; i < todos.length; i++) {
-    //   if(todos[i] == todo){
-    //     console.log("Got it")
-    //   }
-    // }
-    const updatedTodos = [...todos];
-    const index = updatedTodos.indexOf(todo);
-    // console.log(index, "index");
-    if (index != -1) {
-      updatedTodos.splice(index, 1);
-      setTodos(updatedTodos);
-    }
-  }
+  // function deleteTodo(todo) {
+  //   // console.log(todo, "- todo here")
+  //   // for (var i = 0; i < todos.length; i++) {
+  //   //   if(todos[i] == todo){
+  //   //     console.log("Got it")
+  //   //   }
+  //   // }
+  //   const updatedTodos = [...todos];
+  //   const index = updatedTodos.indexOf(todo);
+  //   // console.log(index, "index");
+  //   if (index != -1) {
+  //     updatedTodos.splice(index, 1);
+  //     setTodos(updatedTodos);
+  //   }
+  // }
 
   return (
     <div className="App">
-      <h1>Todo Application</h1>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+
+
+
+      {/* <h1>Todo Application</h1>
       <input value={singleTodo} onChange={handleChange} type='textarea' placeholder='Type your todo here...' />
       <button onClick={handleSubmit}>Add Todo</button>
       <h1>Todos : </h1>
@@ -51,9 +58,21 @@ function App() {
           <button>Completed ?</button>
           <button onClick={() => deleteTodo(e)}>Delete</button>
         </div>
-      ))}
+      ))} */}
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    count: state,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    increment: () => dispatch(incrementAsync()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
